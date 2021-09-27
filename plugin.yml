@@ -1,0 +1,23 @@
+name: UltraVanilla-2
+version: @VERSION@
+main: world.ultravanilla.UltraVanilla
+api-version: 1.16
+prefix: UV
+authors: [ Akoot_, lordpipe ]
+description: Official plugin for UltraVanilla Minecraft server
+website: https://ultravanilla.world/plugin
+commands:
+  ultravanilla:
+    aliases: [uv]
+    permission: ultravanilla.command.ultravanilla
+    description: UltraVanilla command! Use "/%command% help" for usage.
+permissions:
+  ultravanilla.donator:
+    description: Donator permissions
+    children:
+      ultravanilla.command.nick: true
+      ultravanilla.command.hat: true
+  ultravanilla.staff:
+    description: Staff permissions
+    children:
+      ultravanilla.command.donator: true
