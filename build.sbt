@@ -16,6 +16,7 @@ libraryDependencies ++= List(
 
 scalacOptions += "-target:16"
 javacOptions ++= Seq("-source", "16", "-target", "16")
+cancelable in Global := true
 
 Compile / resourceGenerators += Def.task {
     val file = (Compile / resourceManaged).value / "plugin.yml"
