@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import world.ultravanilla.Colors;
+import world.ultravanilla.UltraVanilla;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public abstract class UltraCommand implements TabExecutor {
     protected ChatColor numberColor = Colors.NUMBER;
     protected ChatColor baseColor = Colors.BASE;
     protected ChatColor errorColor = Colors.ERROR;
+    protected ChatColor successColor = Colors.SUCCESS;
 
     public ChatColor getAccentColor() {
         return accentColor;
@@ -40,23 +42,23 @@ public abstract class UltraCommand implements TabExecutor {
         return name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public String getPermission() {
         return permission;
     }
 
+    // Plugin instance
+    protected UltraVanilla plugin;
+
     // Command info
-    protected String name, description, permission;
+    protected String name, permission;
 
     // Sender
     protected CommandSender sender;
 
-    public UltraCommand(String name, String permission) {
-        this.name = name;
-        this.permission = permission;
+    public UltraCommand(UltraVanilla instance, String commandName, String permissionNode) {
+        this.plugin = instance;
+        this.name = commandName;
+        this.permission = permissionNode;
     }
 
     private UltraCommand() { }
@@ -115,6 +117,7 @@ public abstract class UltraCommand implements TabExecutor {
                 .replace("&.", accentColor + "")
                 .replace("&#", numberColor + "")
                 .replace("&!", errorColor + "")
+                .replace("&+", successColor + "")
         );
     }
 
@@ -122,5 +125,17 @@ public abstract class UltraCommand implements TabExecutor {
     }
 
     private void getSuggestions(String[] arg) {
+    }
+
+    protected String getUsageMessage(String arg, String... description) {
+        return successColor + arg + baseColor + "\n  " + baseColor + String.join("\n  ", description);
+    }
+
+    protected String getDefaultUsageMessage(String arg) {
+        return String.format("Could not find help for subcommand &!%s&:!", arg);
+    }
+
+    protected void sendHelp() {
+        sendMessage(getUsage(null));
     }
 }

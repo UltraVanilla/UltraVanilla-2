@@ -1,23 +1,25 @@
 package world.ultravanilla.commands;
 
 import org.bukkit.entity.Player;
+import world.ultravanilla.UltraVanilla;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class UltraVanillaCommand extends UltraCommand {
 
-    public UltraVanillaCommand(String name, String permission) {
-        super(name, permission);
+    public UltraVanillaCommand(UltraVanilla instance, String name, String permission) {
+        super(instance, name, permission);
     }
 
     @Override
     protected boolean onCommand(String[] args) {
         //TODO: make subcommands more automated/generated
         if(args.length == 0) {
-            sendMessage(getUsage(""));
+            sendHelp();
         } else if(args.length == 1) {
             if(args[0].matches("-?\\?|h(elp)?")) {
-                sendMessage(getUsage(""));
+                sendHelp();
             }
             else if(args[0].equalsIgnoreCase("info")) {
                 sendMessage(String.format("&.%s &:- &#%s", "UltraVanilla-2", "2.0.0-SNAPSHOT"));
@@ -40,21 +42,21 @@ public class UltraVanillaCommand extends UltraCommand {
     }
 
     @Override
-    public String getUsage(String arg) {
+    public String getUsage(@Nullable String arg) {
         //TODO: actually make this more automated/generated
-        if(arg.equalsIgnoreCase("")) {
-            return String.join("\n", new String[]{"--- Subcommands ---", getUsage("help"), getUsage("info"), getUsage("reload")});
+        if(arg == null) {
+            return String.join("\n\n", new String[]{getUsage("help"), getUsage("info"), getUsage("reload")});
         }
         else if(arg.toLowerCase().matches("-?h(elp)?")) {
-            return "&.help [subcommand] \n  &:&oshow help on subcommand, this output by default";
+            return getUsageMessage("help [subcommand]", "Shows help on subcommand.", "All subcommands will be listed if none is specified.");
         }
         else if(arg.equalsIgnoreCase("info")) {
-            return "&.info \n  &:&oget info about the plugin";
+            return getUsageMessage("info", "Get info about the plugin such as", "∙ version", "∙ weed toked", "∙ etc");
         }
         else if(arg.equalsIgnoreCase("reload")) {
-            return "&.reload [config] \n  &:&oreloads the config specified, main config by default";
+            return getUsageMessage("reload [config]", "Reloads the config specified", "main config by default");
         } else {
-            return String.format("Could not find help for subcommand &!%s&:!", arg);
+            return getDefaultUsageMessage(arg);
         }
     }
 }

@@ -9,6 +9,7 @@ public class Colors {
     public static final ChatColor NUMBER = ChatColor.of("#fc9cb7");
     public static final ChatColor BASE = ChatColor.of("#fcf8f2");
     public static final ChatColor ERROR = ChatColor.of("#e83565");
+    public static final ChatColor SUCCESS = ChatColor.of("#2fa7fc");
 
 
 }

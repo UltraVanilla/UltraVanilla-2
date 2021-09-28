@@ -7,21 +7,22 @@ import world.ultravanilla.commands.UltraCommand;
 import world.ultravanilla.commands.UltraVanillaCommand;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class UltraVanilla extends JavaPlugin {
 
-    public static Logger logger;
-    public HashSet<UltraCommand> commands;
-    private UltraCommand disabledCommand;
+    private static Logger logger;
+    private HashSet<UltraCommand> commands;
+    private DisabledCommand disabledCommand;
 
     public void onEnable() {
         logger = getLogger();
 
-        disabledCommand = new DisabledCommand("disabled", "ultravanilla.command.disabled");
+        disabledCommand = new DisabledCommand(this, "disabled", "ultravanilla.command.disabled");
 
         commands = new HashSet<>();
-        registerCommand(new UltraVanillaCommand("ultravanilla", "ultravanilla.command.ultravanilla"));
+        registerCommand(new UltraVanillaCommand(this, "ultravanilla", "ultravanilla.command.ultravanilla"));
     }
 
     public void onDisable() {
@@ -40,10 +41,10 @@ public class UltraVanilla extends JavaPlugin {
     public void registerCommand(UltraCommand command) {
         commands.add(command);
         PluginCommand cmd = getCommand(command.getName());
-        cmd.setExecutor(command);
+        Objects.requireNonNull(cmd).setExecutor(command);
     }
 
     public void disableCommand(UltraCommand command) {
-        getCommand(command.getName()).setExecutor(disabledCommand);
+        Objects.requireNonNull(getCommand(command.getName())).setExecutor(disabledCommand);
     }
 }
