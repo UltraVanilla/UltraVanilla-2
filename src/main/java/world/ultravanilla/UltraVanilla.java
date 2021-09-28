@@ -1,6 +1,5 @@
 package world.ultravanilla;
 
-import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import world.ultravanilla.commands.DisabledCommand;
