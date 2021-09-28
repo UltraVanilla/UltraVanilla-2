@@ -1,0 +1,42 @@
+description = ""
+aliases = ["uv"]
+# permission = "ultravanilla.command.ultravanilla"
+
+[colors]
+base = "#fcf8f2"
+accent = "#fce6bf"
+player = "#bffcf3"
+number = "#fc9cb7"
+right = "#2fa7fc"
+wrong = "#e83565"
+
+[sub.--help]
+aliases = ["help", "-h", "h", "?"]
+
+#[sub.help.help]
+#syntax = "help [subcommand]"
+#desc = """
+#Shows help on subcommand.
+#All subcommands will be listed if none is specified.
+#"""
+
+[sub.info.test]
+success = "&.${plugin.name}&#-${plugin.version}"
+
+[sub.info.help]
+syntax = "/{cmd} info [subcommand]"
+desc = "Get info about the server"
+
+# [sub.reload]
+# permission = "ultravanilla.command.ultravanilla.reload"
+
+[sub.reload.--all]
+success = "Reloaded &+all &:config files!"
+
+[sub.reload.main]
+success = "Reloaded &+main &:config file!"
+
+[sub.reload.help]
+syntax = "/{cmd} reload [config]"
+desc = "Reloads a config file"
+ examples = ["reload main", "reload --all"]

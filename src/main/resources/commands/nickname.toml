@@ -1,0 +1,26 @@
+description = "Set a nickname for yourself or another player"
+aliases = ["nick"]
+
+[colors]
+base = "#fcf8f2"
+accent = "#fce6bf"
+player = "#bffcf3"
+number = "#fc9cb7"
+right = "#2fa7fc"
+wrong = "#e83565"
+
+[sub._none]
+success = "Set your nickname to &r{nickname}&:!"
+success_clear = "Cleared your nickname!"
+
+[sub._player]
+success = "Set &.{player}&:'s nickname to &r{nickname}&:!"
+success_clear = "Cleared &.{player}&:'s nickname!"
+
+[sub.--help]
+aliases = ["-h", "?"]
+
+[help]
+syntax = "/{cmd} [player] <nickname>"
+desc = "Set a nickname for yourself or another player"
+examples = ["/{cmd} {r:notch,jeff2983729,Cryosphinx} {r:Notch,Jeff,Master_War}}"]
