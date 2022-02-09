@@ -7,36 +7,21 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import world.ultravanilla.Colors;
+import org.tomlj.Toml;
+import org.tomlj.TomlParseResult;
 import world.ultravanilla.UltraVanilla;
+import world.ultravanilla.util.IOUtil;
+import world.ultravanilla.util.TomlConfig;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.function.Supplier;
 
 public abstract class UltraCommand implements TabExecutor {
-
-    // Colors
-    protected ChatColor accentColor = Colors.ACCENT;
-    protected ChatColor playerColor = Colors.PLAYER;
-    protected ChatColor numberColor = Colors.NUMBER;
-    protected ChatColor baseColor = Colors.BASE;
-    protected ChatColor errorColor = Colors.ERROR;
-    protected ChatColor successColor = Colors.SUCCESS;
-
-    public ChatColor getAccentColor() {
-        return accentColor;
-    }
-
-    public ChatColor getPlayerColor() {
-        return playerColor;
-    }
-
-    public ChatColor getNumberColor() {
-        return numberColor;
-    }
-
-    public ChatColor getBaseColor() {
-        return baseColor;
-    }
 
     public String getName() {
         return name;
@@ -46,8 +31,8 @@ public abstract class UltraCommand implements TabExecutor {
         return permission;
     }
 
-    // Plugin instance
-    protected UltraVanilla plugin;
+    // UltraVanilla instance
+    protected UltraVanilla uv;
 
     // Command info
     protected String name, permission;
@@ -55,10 +40,23 @@ public abstract class UltraCommand implements TabExecutor {
     // Sender
     protected CommandSender sender;
 
+    // Config
+    protected TomlConfig config;
+
     public UltraCommand(UltraVanilla instance, String commandName, String permissionNode) {
-        this.plugin = instance;
+        this.uv = instance;
         this.name = commandName;
         this.permission = permissionNode;
+
+        config = (TomlConfig) uv.registerConfig("command:" + commandName, "commands/" + commandName + ".toml");
+    }
+
+    public String getDefaultColor(String id) {
+        return uv.getPalette().getUxDefault(id);
+    }
+
+    public ChatColor getColor(String id) {
+        return ChatColor.of(config.getTomlParseResult().getString("color." + id, () -> getDefaultColor(id)));
     }
 
     private UltraCommand() { }
@@ -84,7 +82,10 @@ public abstract class UltraCommand implements TabExecutor {
      * @param arg The argument to get usage for
      * @return The usage for the argument
      */
-    public abstract String getUsage(String arg);
+    public String getUsage(String arg) {
+        // todo: load from toml
+        return null;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -96,11 +97,11 @@ public abstract class UltraCommand implements TabExecutor {
     }
 
     protected void sendError(String errorMessage) {
-        sendMessage(errorColor + errorMessage);
+        sendMessage("&!" + errorMessage);
     }
 
     protected void sendPermissionMessage(String attemptedAction) {
-        sendMessage(baseColor + "You do not have permission to " + errorColor + attemptedAction + baseColor + ".");
+        sendMessage("You do not have permission to &!" + attemptedAction + "&:.");
     }
 
     @Override
@@ -109,15 +110,19 @@ public abstract class UltraCommand implements TabExecutor {
         return onTabComplete(args);
     }
 
+    protected String getString(String key) {
+        return config.getTomlParseResult().getString(key, () -> key);
+    }
+
     protected void sendMessage(String message) {
         message = ChatColor.translateAlternateColorCodes('&', message);
-        sender.sendMessage(baseColor + message
-                .replace("&@", playerColor + "")
-                .replace("&:", baseColor + "")
-                .replace("&.", accentColor + "")
-                .replace("&#", numberColor + "")
-                .replace("&!", errorColor + "")
-                .replace("&+", successColor + "")
+        sender.sendMessage(getColor("base") + message
+                .replace("&@", getColor("player") + "")
+                .replace("&:", getColor("base") + "")
+                .replace("&.", getColor("accent") + "")
+                .replace("&#", getColor("number") + "")
+                .replace("&!", getColor("error") + "")
+                .replace("&+", getColor("success") + "")
         );
     }
 
@@ -128,7 +133,7 @@ public abstract class UltraCommand implements TabExecutor {
     }
 
     protected String getUsageMessage(String arg, String... description) {
-        return successColor + arg + baseColor + "\n  " + baseColor + String.join("\n  ", description);
+        return "&+" + arg + "&:\n  &:" + String.join("\n  ", description);
     }
 
     protected String getDefaultUsageMessage(String arg) {

@@ -1,0 +1,27 @@
+description = "Disabled!"
+aliases = ["disabled"]
+
+# todo: change later
+[colors]
+base = "#ff0000"
+accent = "#ff0000"
+player = "#ff0000"
+number = "#ff0000"
+right = "#ff0000"
+wrong = "#ff0000"
+
+[sub._none]
+success = ""
+success_clear = ""
+
+[sub._player]
+success = ""
+success_clear = ""
+
+[sub.--help]
+aliases = []
+
+[help]
+syntax = ""
+desc = ""
+examples = []

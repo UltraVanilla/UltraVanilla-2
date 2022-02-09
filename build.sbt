@@ -10,12 +10,13 @@ resolvers ++= List(
     "m2-dv8tion" at "https://m2.dv8tion.net/releases"
 )
 libraryDependencies ++= List(
-    "io.papermc.paper" % "paper-api" % "1.17.1-R0.1-SNAPSHOT" % Provided,
-    "net.dv8tion" % "JDA" % "4.3.0_277" exclude("club.minnced", "opus-java")
+    "io.papermc.paper" % "paper-api" % "1.18-rc3-R0.1-SNAPSHOT" % Provided,
+    "net.dv8tion" % "JDA" % "4.3.0_277" exclude("club.minnced", "opus-java"),
+    "org.tomlj" % "tomlj" % "1.0.0"
 )
 
-scalacOptions += "-target:16"
-javacOptions ++= Seq("-source", "16", "-target", "16")
+scalacOptions += "-target:17"
+javacOptions ++= Seq("-source", "17", "-target", "17")
 cancelable in Global := true
 
 Compile / resourceGenerators += Def.task {
@@ -34,7 +35,7 @@ assembly / assemblyMergeStrategy := {
 }
 
 val sbtDefaultTarget = System.getProperty("sbtDefaultTarget", "false")
-val sbtOutputDirectory = System.getProperty("sbtOutputDirectory", "testserver/plugins")
+val sbtOutputDirectory = System.getProperty("sbtOutputDirectory", "Server/plugins")
 
 assembly / assemblyOutputPath := {
     val default = (assembly / assemblyOutputPath).value

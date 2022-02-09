@@ -1,0 +1,38 @@
+{
+  "ux.default.accent": {
+    "name": "UX:DefaultAccent",
+    "description": "Command message \"accent color\" default.",
+    "hidden": true,
+    "value": "fce6bf"
+  },
+  "ux.default.player": {
+    "name": "UX:DefaultPlayer",
+    "description": "Command message \"player color\" default.",
+    "hidden": true,
+    "value": "bffcf3"
+  },
+  "ux.default.number": {
+    "name": "UX:DefaultNumber",
+    "description": "Command message \"number color\" default.",
+    "hidden": true,
+    "value": "fc9cb7"
+  },
+  "ux.default.base": {
+    "name": "UX:DefaultBase",
+    "description": "Command message \"base color\" default.",
+    "hidden": true,
+    "value": "fcf8f2"
+  },
+  "ux.default.error": {
+    "name": "UX:DefaultError",
+    "description": "Command message \"error color\" default.",
+    "hidden": true,
+    "value": "e83565"
+  },
+  "ux.default.success": {
+    "name": "UX:DefaultSuccess",
+    "description": "Command message \"success color\" default.",
+    "hidden": true,
+    "value": "2fa7fc"
+  }
+}

@@ -1,6 +1,7 @@
 description = "Set a nickname for yourself or another player"
-aliases = ["nick"]
+aliases = []
 
+# todo: change later
 [colors]
 base = "#fcf8f2"
 accent = "#fce6bf"

@@ -11,6 +11,10 @@ commands:
     aliases: [uv]
     permission: ultravanilla.command.ultravanilla
     description: UltraVanilla command! Use "/%command% help" for usage.
+  nick:
+    aliases: []
+    permission: ultravanilla.command.nickname
+    description: Set your nickname!
 permissions:
   ultravanilla.donator:
     description: Donator permissions
